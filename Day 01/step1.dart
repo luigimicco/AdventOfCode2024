@@ -2,8 +2,9 @@ import 'dart:io';
 
 void main() {
   List<String> rows = getRows();
+  int nRows = rows.length;
 
-  for (int j = 0; j < rows.length; j++) {}
+  for (int j = 0; j < nRows; j++) {}
 }
 
 List<String> getRows() {
