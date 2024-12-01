@@ -4,7 +4,23 @@ void main() {
   List<String> rows = getRows();
   int nRows = rows.length;
 
-  for (int j = 0; j < nRows; j++) {}
+  List<int> left = [];
+  List<int> right = [];
+
+  for (int j = 0; j < nRows; j++) {
+    String row = rows[j];
+    List<String> parts = row.split("   ");
+    left.add(int.parse(parts[0]));
+    right.add(int.parse(parts[1]));
+  }
+  left.sort();
+  right.sort();
+
+  int total = 0;
+  for (int j = 0; j < nRows; j++) {
+    total = total + (left[j] - right[j]).abs();
+  }
+  print(total);
 }
 
 List<String> getRows() {
