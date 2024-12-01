@@ -6,19 +6,18 @@ void main() {
 
   List<int> left = [];
   List<int> right = [];
-  for (int j = 0; j < nRows; j++) {
-    String row = rows[j];
+  rows.forEach((row) {
     List<String> parts = row.split("   ");
     left.add(int.parse(parts[0]));
     right.add(int.parse(parts[1]));
-  }
+  });
 
   int score = 0;
-  for (int j = 0; j < nRows; j++) {
-    var similarity = right.where((item) => item == left[j]);
+  left.forEach((row) {
+    var similarity = right.where((item) => item == row);
+    score = score + row * similarity.length;
+  });
 
-    score = score + left[j] * similarity.length;
-  }
   print(score);
 }
 

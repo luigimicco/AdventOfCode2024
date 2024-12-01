@@ -7,12 +7,12 @@ void main() {
   List<int> left = [];
   List<int> right = [];
 
-  for (int j = 0; j < nRows; j++) {
-    String row = rows[j];
+  rows.forEach((row) {
     List<String> parts = row.split("   ");
     left.add(int.parse(parts[0]));
     right.add(int.parse(parts[1]));
-  }
+  });
+
   left.sort();
   right.sort();
 
