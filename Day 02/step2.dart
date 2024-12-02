@@ -9,21 +9,14 @@ void main() {
     List<String> levels = row.split(" ");
 
     List<int> report = [];
-    for (var i = 0; i < levels.length; i++) {
-      report.add(int.parse(levels[i]));
-    }
-    if (isSafe(report)) {
-      safeCount++;
-    } else {
-      for (var j = 0; j < levels.length; j++) {
-        report = [];
-        for (var i = 0; i < levels.length; i++) {
-          if (i != j) report.add(int.parse(levels[i]));
-        }
-        if (isSafe(report)) {
-          safeCount++;
-          j = levels.length;
-        }
+    for (var j = -1; j < levels.length; j++) {
+      report = [];
+      for (var i = 0; i < levels.length; i++) {
+        if (i != j) report.add(int.parse(levels[i]));
+      }
+      if (isSafe(report)) {
+        safeCount++;
+        j = levels.length;
       }
     }
   });
