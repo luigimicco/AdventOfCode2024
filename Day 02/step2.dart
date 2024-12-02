@@ -8,43 +8,48 @@ void main() {
   rows.forEach((row) {
     List<String> levels = row.split(" ");
 
-    int unsafe = 0;
-    int dir = 0;
-    int prev = int.parse(levels[0]);
-    dir = (int.parse(levels[1]) - prev).sign;
-
-    if (dir == 1) {
-      prev = int.parse(levels[0]);
-      for (var i = 1; i < levels.length; i++) {
-        int diff = int.parse(levels[i]) - prev;
-        if (!(diff > 0 && diff < 4)) {
-          unsafe++;
-        }
-        if (unsafe != 1) {
-          prev = int.parse(levels[i]);
-        }
-      }
+    List<int> report = [];
+    for (var i = 0; i < levels.length; i++) {
+      report.add(int.parse(levels[i]));
+    }
+    if (isSafe(report)) {
+      safeCount++;
     } else {
-      prev = int.parse(levels[levels.length - 1]);
-      for (var i = levels.length - 2; i >= 0; i--) {
-        int diff = int.parse(levels[i]) - prev;
-        if (!(diff > 0 && diff < 4)) {
-          unsafe++;
+      for (var j = 0; j < levels.length; j++) {
+        report = [];
+        for (var i = 0; i < levels.length; i++) {
+          if (i != j) report.add(int.parse(levels[i]));
         }
-        if (unsafe != 1) {
-          prev = int.parse(levels[i]);
+        if (isSafe(report)) {
+          safeCount++;
+          j = levels.length;
         }
       }
     }
-
-    if (unsafe < 2) safeCount++;
   });
 
   print(safeCount);
 }
 
+bool isSafe(List<int> report) {
+  bool safe = true;
+  int dir = 0;
+  int prev = report[0];
+  dir = (report[1] - prev).sign;
+  for (var i = 1; i < report.length && safe; i++) {
+    int diff = (report[i] - prev) * dir;
+
+    if (diff <= 0 || diff > 3) {
+      safe = false;
+    }
+    prev = report[i];
+  }
+
+  return safe;
+}
+
 List<String> getRows() {
-  File file = File("test.txt");
+  File file = File("data.txt");
   var fileContent = file.readAsStringSync();
   return fileContent.split("\n");
 }
