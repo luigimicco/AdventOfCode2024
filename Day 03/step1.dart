@@ -3,9 +3,8 @@ import 'dart:io';
 void main() {
   String row = getRow();
 
-  RegExp exp = RegExp(r'(?:mul\((\d{1,3})),(\d{1,3})\)');
-  String str = row; // 'Parse my string';
-  Iterable<RegExpMatch> matches = exp.allMatches(str);
+  RegExp exp = RegExp(r'mul\((\d{1,3}),(\d{1,3})\)');
+  Iterable<RegExpMatch> matches = exp.allMatches(row);
 
   int score = 0;
   for (final m in matches) {
