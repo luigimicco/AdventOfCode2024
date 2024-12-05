@@ -2,7 +2,6 @@ import 'dart:io';
 
 void main() {
   List<String> rows = getRows();
-  int nRows = rows.length;
 
   List<int> left = [];
   List<int> right = [];

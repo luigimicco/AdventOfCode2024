@@ -2,7 +2,6 @@ import 'dart:io';
 
 void main() {
   List<String> rows = getRows();
-  int nRows = rows.length;
 
   int safeCount = 0;
   rows.forEach((row) {
