@@ -68,47 +68,29 @@ void main() {
   int score = 0;
 
   List<List<int>> disk = [];
+  String space = "";
   for (var i = 0; i < row.length; i = i + 2) {
     int block = int.parse(row.substring(i, i + 1));
     int free = 0;
     if (i + 1 < row.length) free = int.parse(row.substring(i + 1, i + 2));
-    disk.add([block, free]);
+    int pos = space.length;
+    space += disk.length.toString() * block;
+    space += "." * free;
+    disk.add([block, free, pos]);
   }
-//  print(disk);
+  print(space);
 
-  String space = "";
-  for (var i = 0; i < disk.length; i++) {
-    space += i.toString() * disk[i][0];
-    space += "." * disk[i][1];
-  }
+  for (int i = disk.length - 1; i >= 0; i--) {
+    String pattern = i.toString() * disk[i][0];
 
-  int pos = space.length - 1;
-  int i = 0;
-  bool check = true;
-  while (check) {
-    String toCheck = "";
-    String right = space[pos];
-    while (right == "." && pos > 0) {
-      pos--;
-      right = space[pos];
-    }
-    toCheck = right;
-    pos--;
-    String newChar = space[pos];
-    while (newChar == right && pos > 0) {
-      toCheck += newChar;
-      pos--;
-      newChar = space[pos];
-    }
+    int pos = disk[i][2];
 
-    int left = space.indexOf("." * toCheck.length);
+    int left = space.indexOf("." * pattern.length);
     if (left != -1 && left < pos) {
-      space = space.replaceFirst("." * toCheck.length, toCheck);
-      space = space.replaceFirst(toCheck, "." * toCheck.length, pos);
+      space = space.replaceRange(left, left + pattern.length, pattern);
+      space =
+          space.replaceRange(pos, pos + pattern.length, "." * pattern.length);
     }
-
-    //print(space);
-    if (pos < 1) check = false;
   }
 
   print(space);
